@@ -38,7 +38,7 @@ setup(
     version=get_version("carbin"),
     url='https://github.com/gottingen/carbin',
     license='boost',
-    description='Cmake package retrieval',
+    description='Cmake project helper',
     author='Jeff li',
     author_email='bohuli2048@gmial.com',
     packages=find_packages(),
