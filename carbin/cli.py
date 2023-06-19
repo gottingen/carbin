@@ -149,10 +149,10 @@ def install_command(prefix, pkgs, define, file, test, test_all, update, generato
     """ Install packages """
     variant = get_build_type(debug, release, build_type)
     if not file and not pkgs:
-        if os.path.exists('dev-requirements.txt'):
-            file = 'dev-requirements.txt'
+        if os.path.exists('dev-carbin_deps.txt'):
+            file = 'dev-carbin_deps.txt'
         else:
-            file = 'requirements.txt'
+            file = 'carbin_deps.txt'
     pbs = [PackageBuild(pkg, cmake=cmake, variant=variant) for pkg in pkgs]
     for pbu in util.flat([prefix.from_file(file), pbs]):
         pb = pbu.merge_defines(define)

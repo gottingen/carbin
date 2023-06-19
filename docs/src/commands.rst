@@ -9,7 +9,7 @@ build
 
 .. program:: build
 
-This will build a package, but it doesn't install it. This is useful over using raw cmake as it will use the cmake toolchain that was initialized by carbin which sets cmake up to easily find the dependencies that have been installed by carbin. This will also install the dependencies in a ``dev-requirements.txt`` file if available, otherwise it will install any dependencies in the ``requirements.txt``.
+This will build a package, but it doesn't install it. This is useful over using raw cmake as it will use the cmake toolchain that was initialized by carbin which sets cmake up to easily find the dependencies that have been installed by carbin. This will also install the dependencies in a ``dev-carbin_deps.txt`` file if available, otherwise it will install any dependencies in the ``carbin_deps.txt``.
 
 .. option:: <package-source>
 

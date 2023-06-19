@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import os, shutil, shlex, six, inspect, click, contextlib, sys, functools
+import os, shutil, shlex, six, inspect, click, contextlib, sys, functools, re
 
 from carbin.builder import Builder
 from carbin.package import fname_to_pkg
@@ -294,7 +294,7 @@ class CarbinPrefix:
         util.ensure_exists(recipe_pkg)
         p = next(iter(self.from_file(recipe_pkg, no_recipe=True)))
         self.check(lambda: p.pkg_src is not None)
-        requirements = os.path.join(recipe, "requirements.txt")
+        requirements = os.path.join(recipe, "carbin_deps.txt")
         if os.path.exists(requirements): p.requirements = requirements
         p.pkg_src.recipe = None
         # Use original name
@@ -319,8 +319,17 @@ class CarbinPrefix:
             start = url[7:]
         with open(file) as f:
             self.log("parse file: " + file)
+            cache_line = ""
             for line in f.readlines():
-                tokens = shlex.split(line, comments=True)
+                if str.endswith(line, '\\\n'):
+                    if line.lstrip().startswith('#'):
+                        continue
+                    cache_line = cache_line + line.strip('\\\n')
+                    continue
+                cache_line = cache_line + line
+                print(cache_line)
+                tokens = shlex.split(cache_line, comments=True)
+                cache_line = ""
                 if len(tokens) > 0:
                     pb = parse_pkg_build_tokens(tokens)
                     ps = self.from_file(util.actual_path(pb.file, start), no_recipe=no_recipe) if pb.file else [
@@ -332,7 +341,7 @@ class CarbinPrefix:
 
     def install_deps(self, pb, d, test=False, test_all=False, generator=None, insecure=False,
                      ignore_requirements=False):
-        req_txt = os.path.join(d, 'requirements.txt') if not ignore_requirements else None
+        req_txt = os.path.join(d, 'carbin_deps.txt') if not ignore_requirements else None
         for dependent in self.from_file(pb.requirements or req_txt, pb.pkg_src.url):
             transient = dependent.test or dependent.build
             testing = test or test_all
@@ -405,10 +414,10 @@ class CarbinPrefix:
     def build(self, pb, test=False, target=None, generator=None):
         pb = self.parse_pkg_build(pb)
         src_dir = pb.pkg_src.get_src_dir()
-        if os.path.exists(os.path.join(src_dir, 'dev-requirements.txt')):
-            pb.requirements = os.path.join(src_dir, 'dev-requirements.txt')
-        elif os.path.exists(os.path.join(src_dir, 'requirements.txt')):
-            pb.requirements = os.path.join(src_dir, 'requirements.txt')
+        if os.path.exists(os.path.join(src_dir, 'dev-carbin_deps.txt')):
+            pb.requirements = os.path.join(src_dir, 'dev-carbin_deps.txt')
+        elif os.path.exists(os.path.join(src_dir, 'carbin_deps.txt')):
+            pb.requirements = os.path.join(src_dir, 'carbin_deps.txt')
         with self.create_builder(pb.to_fname()) as builder:
             # Install any dependencies first
             self.install_deps(pb, src_dir, generator=generator, test=test)

@@ -118,6 +118,34 @@ class Creater:
             util.copy_to(src, 'benchmark')
 
     def create_requires_file(self, d):
-        if self.requirements:
-            src = os.path.join(d, 'requirements.txt')
+        if not self.requirements:
+            return
+        if os.path.exists('carbin_deps.txt'):
+            return
+        src = os.path.join(d, 'carbin_deps.txt')
+        if os.path.exists(src):
             util.copy_to(src, '.')
+            return
+        f = fw = open('carbin_deps.txt', 'w')
+        content = '''
+#
+# Copyright 2023 The titan-search Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+###########
+# turbo
+#gottingen/turbo@v0.9.4 -DCARBIN_BUILD_TEST=OFF -DCARBIN_BUILD_BENCHMARK=OFF -DCARBIN_BUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBRARY=OFF -DBUILD_STATIC_LIBRARY=ON -DCMAKE_BUILD_TYPE=release
+        '''
+        f.write(content)
+        f.close()

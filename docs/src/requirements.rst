@@ -2,9 +2,9 @@
 Requirements file
 =================
 
-.. program:: requirements.txt
+.. program:: carbin_deps.txt
 
-``carbin`` will install all packages listed in the top-level ``requirements.txt`` file in the package. Each requirement is listed on a new line.
+``carbin`` will install all packages listed in the top-level ``carbin_deps.txt`` file in the package. Each requirement is listed on a new line.
 
 .. option:: <package-source>
 
@@ -36,5 +36,5 @@ This specifies the package source (see :ref:`pkg-src`) that will be installed.
 
 .. option::  --ignore-requirements
 
-    This will ignore the requirement.txt file in the project. This is useful when a package has a requirements.txt file that is actually for python packages, not carbin.
+    This will ignore the requirement.txt file in the project. This is useful when a package has a carbin_deps.txt file that is actually for python packages, not carbin.
 
