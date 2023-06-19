@@ -1,3 +1,18 @@
+#
+# Copyright 2023 The Turbo Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 import click, os, sys, shutil, json, six, hashlib, ssl
 
 if sys.version_info[0] < 3:
@@ -198,6 +213,7 @@ def rm_empty_dirs(d):
 def get_dirs(d):
     return (os.path.join(d,o) for o in os.listdir(d) if os.path.isdir(os.path.join(d,o)))
 
+
 def copy_to(src, dst_dir):
     target = os.path.join(dst_dir, os.path.basename(src))
     if os.path.isfile(src): shutil.copyfile(src, target)
@@ -235,9 +251,11 @@ def download_to(url, download_dir, insecure=False):
         raise BuildError("Download failed for: {0}".format(url))
     return file
 
+
 def transfer_to(f, dst, copy=False):
     if USE_SYMLINKS and not copy: return symlink_to(f, dst)
     else: return copy_to(f, dst)
+
 
 def retrieve_url(url, dst, copy=False, insecure=False, hash=None):
     remote = not url.startswith('file://')
@@ -253,6 +271,7 @@ def retrieve_url(url, dst, copy=False, insecure=False, hash=None):
         else:
             raise BuildError("Hash doesn't match for {0}: {1}".format(url, hash))
     return f
+
 
 def extract_ar(archive, dst, *kwargs):
     if sys.version_info[0] < 3 and archive.endswith('.xz'):
@@ -272,6 +291,7 @@ def extract_ar(archive, dst, *kwargs):
         d = os.path.join(dst, 'header')
         mkdir(d)
         copy_to(archive, d)
+
 
 def hash_file(f, t):
     h = hashlib.new(t)
