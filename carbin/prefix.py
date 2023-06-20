@@ -327,7 +327,6 @@ class CarbinPrefix:
                     cache_line = cache_line + line.strip('\\\n')
                     continue
                 cache_line = cache_line + line
-                print(cache_line)
                 tokens = shlex.split(cache_line, comments=True)
                 cache_line = ""
                 if len(tokens) > 0:

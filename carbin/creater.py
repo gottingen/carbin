@@ -39,17 +39,20 @@ class Creater:
 
     def create_project(self):
         d = self.fetch()
-        self.copy_main(d)
-        self.deal_src(d)
+        self.copy_project_cmakelist(d)
+        self.deal_src_cmakelist(d)
         self.deal_carbin_cmake(d)
         self.deal_cmake(d)
-        self.deal_carbin_copt(d)
         self.create_example_dir(d)
         self.create_tests_dir(d)
         self.create_benchmark_dir(d)
         self.create_requires_file(d)
 
-    def copy_main(self, d):
+    def upgrade_carbin(self):
+        d = self.fetch()
+        self.deal_carbin_cmake(d)
+
+    def copy_project_cmakelist(self, d):
         p = os.path.join(d, 'CMakeLists.txt')
         fr = open(p, 'r')
         content = fr.read()
@@ -69,7 +72,7 @@ class Creater:
         fw.write(wc)
         fw.close()
 
-    def deal_src(self, d):
+    def deal_src_cmakelist(self, d):
         util.mkdir(self.name)
         src = os.path.join(d, 'changeme/CMakeLists.txt')
         util.copy_to(src, self.name)
@@ -80,17 +83,13 @@ class Creater:
         cm = os.path.join(d, 'carbin_cmake')
         util.copy_dir(cm, 'carbin_cmake')
 
+    ########
+    # user's cmake .do not edit
     def deal_cmake(self, d):
         if os.path.exists('cmake'):
             return
         cm = os.path.join(d, 'cmake')
         util.copy_dir(cm, 'cmake')
-
-    def deal_carbin_copt(self, d):
-        if os.path.exists('copts'):
-            shutil.rmtree('copts')
-        cc = os.path.join(d, 'copts')
-        util.copy_dir(cc, 'copts')
 
         if not os.path.exists('conda'):
             cc = os.path.join(d, 'conda')

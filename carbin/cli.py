@@ -90,9 +90,13 @@ def use_prefix(f):
 @click.option('--examples', is_flag=True, help="Create test Dir")
 @click.option('--benchmark', is_flag=True, help="Create test Dir")
 @click.option('--requirements', is_flag=True, help="Create test Dir")
-def create_command(prefix, name, test, examples, benchmark, requirements):
-    print("create cmd\n")
+@click.option('--upgrade', is_flag=True, help="Create test Dir")
+def create_command(prefix, name, test, examples, benchmark, requirements, upgrade):
     c = Creater(prefix, name, test, examples, benchmark, requirements)
+    if upgrade:
+        c.upgrade_carbin()
+        click.echo('done...')
+        return
     c.create_project()
     click.echo('done...')
 
