@@ -18,12 +18,12 @@ def setup(app):
     app.add_css_file("main_stylesheet.css")
 
 extensions = ['breathe']
-breathe_projects = { 'carbin-docs': '../xml' }
+breathe_projects = { 'carbin': '../xml' }
 templates_path = ['_templates']
 html_static_path = ['_static']
 source_suffix = '.rst'
 master_doc = 'index'
-project = 'carbin-docs'
+project = 'carbin'
 copyright = 'Copyright 2023 The Elastic-AI Authors.'
 author = 'jeff.li'
 
@@ -33,5 +33,5 @@ exclude_patterns = []
 highlight_language = 'c++'
 pygments_style = 'sphinx'
 todo_include_todos = False
-htmlhelp_basename = 'carbin-docs'
+htmlhelp_basename = 'carbin'
 
