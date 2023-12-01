@@ -1,6 +1,6 @@
-============
+=================================
 Introduction
-============
+=================================
 
 Cmake package retrieval. This can be used to download and install cmake packages. The advantages of using ``carbin`` are:
 
@@ -9,9 +9,9 @@ Cmake package retrieval. This can be used to download and install cmake packages
 * Decentralized: Packages can be installed from anywhere, from github, urls, or local files.
 
 
----------------
+----------------------------------
 Installing carbin
----------------
+----------------------------------
 
 ``carbin`` can be simply installed using ``pip`` (you can get pip from `here <https://pip.pypa.io/en/stable/installing/>`_)::
 
@@ -25,9 +25,9 @@ On windows, you may want to install pkgconfig-lite to support packages that use 
 
     carbin install pfultz2/pkgconfig
 
-----------
+----------------------
 Quickstart
-----------
+----------------------
 
 We can also install cmake packages directly from source files, for example zlib::
 
@@ -45,9 +45,9 @@ Or curl::
 
     carbin install curl
 
------
+-----------------------------
 Usage
------
+-----------------------------
 
 """"""""""""""""""""
 Installing a package

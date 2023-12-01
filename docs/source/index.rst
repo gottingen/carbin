@@ -4,19 +4,19 @@
    contain the root `toctree` directive.
 
 Welcome to carbin's documentation!
-================================
+============================================================
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-   src/intro
-   src/package_src
-   src/requirements
-   src/commands
-   src/building
-   src/recipe
+   intro
+   package_src
+   requirements
+   commands
+   building
+   recipe
 
 
 Indices and tables
